@@ -4,23 +4,27 @@ class ContaBancaria:
     '''
     OBS: Operações no histórico> 0 - Sacar, 1 - Depositar e 2 - Transferir
     '''
-    def __init__(self, titular, saldo, limite, historico):
+    def __init__(self, titular, saldo = 1000, limite = [] , historico = 0):
         self.titular = titular
         self.saldo = saldo
         self.limite = limite
         self.historico = historico
         
-    def dpositar(self, valor):
+    def depositar(self, valor, remetente = None):
         '''
         Objetivo: Método que realiza do depósito na conta bancária.
-        Entrada: Valor(float)
+        Entrada: Valor(float) e remetente (String)
         Return: True, se a operação fopi realizada com sucesso, False, se a operação não foi realizada
 
         '''
+        op = 1
+        #Detecta se é uma transferencia
+        if remetente != None:
+            op = 2
         if valor > 0:
             self.saldo += valor
-            self.historico.append({"operacao": 1,
-                                "remetente": self.titular,
+            self.historico.append({"operacao": op,
+                                "remetente": remetente,
                                 "destinatario": "",
                                 "valor": valor,
                                 "saldo": self.saldo,
@@ -30,19 +34,22 @@ class ContaBancaria:
             print(f"O valor {valor} é invalido") 
             return False           
         
-    def sacar(self, valor):
+    def sacar(self, valor, destinatario = None):
         '''
         Objetivo: Método que realiza do depósito na conta bancária.
-        Entrada: Valor(float)
+        Entrada: Valor(float) e destinatario (String)
         Return: True, se a operação fopi realizada com sucesso, False, se a operação não foi realizada
 
         '''
-        
+        op = 0
+        #Detecta se é uma transferencia
+        if destinatario != None:
+            op = 2
         if valor <= self.saldo:
             self.saldo -= valor
-            self.historico.append({"operacao": 0,
+            self.historico.append({"operacao": op,
                                    "remetente": self.titular,
-                                   "destinatario": "",
+                                   "destinatario": destinatario,
                                    "valor": valor,
                                    "saldo": self.saldo,
                                    "dataetempo": int(time.time())})
@@ -53,6 +60,12 @@ class ContaBancaria:
             if a == "s": 
                 if (self.saldo + self.limite) >= valor:
                     self.saldo -= valor
+                    self.historico.append({"operacao": op,
+                                   "remetente": self.titular,
+                                   "destinatario": destinatario,
+                                   "valor": valor,
+                                   "saldo": self.saldo,
+                                   "dataetempo": int(time.time())})
                     print("Saque realizado")
                     return True
                 else:
@@ -61,7 +74,16 @@ class ContaBancaria:
                 print("Operação com limite cancelada!")
             return False
             
-    #def transferir(self):
+    def transferir(self, destinatario, valor):
+        """
+        Objetivo: método para transferir um valor entre duas contas
+        entrada: valor (float) e obj ContaBancaria do destinatario
+        Saida: se ok -> True, se NOK -> False
+        """
+        # Se o saque ocorrer com sucesso
+        if self.sacar(valor, destinatario.titular):
+            # deposita na conta do destinatario
+            destinatario.depositar(valor, self.titular)
     
  
 
@@ -75,9 +97,9 @@ class ContaBancaria:
                 f"\nDestinatário: {transacao['destinatario']}"
                 f"\nValor: {transacao['valor']}"
                 f"\nSaldo: {transacao['saldo']}"
-                f"Data e tempo:"
-                f"{dt.tm_mday}/{dt.tm_mon}/{dt.tm_year} às:"
-                f"{dt.tm_hour} : {dt.tm_min} : {dt.tm_sec}")
+                f"\nData e tempo:"
+                f" {dt.tm_mday}/{dt.tm_mon}/{dt.tm_year}"
+                f"\nAs: {dt.tm_hour}:{dt.tm_min}:{dt.tm_sec}")
             
 
     #def exibirSaldo(self):
