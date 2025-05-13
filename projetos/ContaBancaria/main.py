@@ -1,8 +1,10 @@
 from models.ContaBancaria import ContaBancaria
-from utils.ferramentas import ferramentas
+from utils.ferramentas import buscar_conta
 
 # Lista de contas
 Contas = []
+
+
 
 # Função principal
 def main():
@@ -25,7 +27,7 @@ def main():
                 print(f"A conta de {titular} já existe!")
             else:
                 deposito_inicial = float(input("Digite o valor do depósito inicial: "))
-                conta = ContaBancaria(titular)
+                conta = ContaBancaria(titular, saldo=deposito_inicial)
                 if deposito_inicial > 0:
                     conta.depositar(deposito_inicial)
                     print(f"Depósito inicial de R${deposito_inicial} realizado com sucesso!")
@@ -115,3 +117,5 @@ def main():
             print("Saindo...")
             break
 
+if __name__ == "__main__":
+    main()
