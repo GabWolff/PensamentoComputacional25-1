@@ -1,5 +1,6 @@
 from models.ContaBancaria import ContaBancaria
 from utils.ferramentas import buscar_conta
+from utils.ferramentas import gerenciar_pix
 
 # Lista de contas
 Contas = []
@@ -17,6 +18,7 @@ def main():
         print("5 - Realizar transferência")
         print("6 - Exibir histórico de transações")
         print("7 - Excluir conta (Escolha conta para transferir o valor que resta na conta)")
+        print("8 - Digite a sua chave pix")
         print("0 - Sair")
 
         escolha = input("Tecle qual opção deseja fazer: ")
@@ -112,6 +114,15 @@ def main():
                     print(f"Conta de {titular} excluída com sucesso!")
             else:
                 print("Conta não encontrada")
+            
+        elif escolha == "8":
+            titular = input("Digite o nome do titular: ")
+            conta = buscar_conta(titular)
+            if conta:
+                gerenciar_pix(conta)
+            else:
+                print("Conta não encontrada")
+
 
         elif escolha == "0":
             print("Saindo...")

@@ -4,10 +4,11 @@ class ContaBancaria:
     '''
     OBS: Operações no histórico> 0 - Sacar, 1 - Depositar e 2 - Transferir
     '''
-    def __init__(self, titular: str, saldo: float, limite: float, historico: list = []) -> None:
+    def __init__(self, titular: str, saldo: float, limite: float, chavePix: list, historico: list = []) -> None:
         self.__titular = titular
         self.__saldo = saldo
         self.__limite = limite
+        self.__chavePix = chavePix
         self.__historico = historico if historico is not None else []
         
 
@@ -102,18 +103,30 @@ class ContaBancaria:
                 f" {dt.tm_mday}/{dt.tm_mon}/{dt.tm_year}"
                 f"\nAs: {dt.tm_hour}:{dt.tm_min}:{dt.tm_sec}")
             
+    
+    def chavePix(self, novas_chaves):
+        if isinstance(novas_chaves, list):
+            self.__chavePix = novas_chaves
+        else:
+            print("A chave Pix deve ser uma lista.")
+
+            
     @property
     def titular(self):
         return self.__titular
-    
+
     @property
     def saldo(self):
         return self.__saldo
-    
+
     @property
     def historico(self):
-        return self.__saldo
-    
+        return self.__historico  # CORRIGIDO aqui
+
     @property
     def limite(self):
         return self.__limite
+
+    @property
+    def chavePix(self):
+        return self.__chavePix  # Getter da chavePix funcionando corretamente
