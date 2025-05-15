@@ -1,14 +1,13 @@
 class veiculos:
     
-    def __init__(self, modelo: str, marca: str, ano: int, cor: str, placa: str, fipe: float):
-
+    def __init__(self, modelo, marca, ano, cor, placa, fipe,):
         self.__modelo = modelo
         self.__marca = marca
         self.__ano = ano
         self.__cor = cor
         self.__placa = placa
         self.__fipe = fipe
-        
+      
         
     def __str__(self) -> str:
         """Retorna uma representação em string do veículo"""
@@ -19,9 +18,7 @@ class veiculos:
         infos += f"cor: {self.__cor}\n" 
         infos += f"fipe: {self.__fipe}\n"
         return infos    
-        
 
-    def getPlaca(self):
+    def getPlaca(self) -> str:
         """Retorna a placa do veículo"""
-        # Se a placa não for uma string, converte para string
         return self.__placa
