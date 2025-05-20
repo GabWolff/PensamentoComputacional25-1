@@ -22,3 +22,9 @@ class veiculos:
     def getPlaca(self) -> str:
         """Retorna a placa do veículo"""
         return self.__placa
+    
+    def calcular_consumo(self, distancia: float) -> float:
+        """Calcula o consumo do veículo em função da distância percorrida"""
+        # Implementar lógica de cálculo de consumo
+        consumo_total = distancia / 12 # Exemplo: 12 km/l
+        return consumo_total

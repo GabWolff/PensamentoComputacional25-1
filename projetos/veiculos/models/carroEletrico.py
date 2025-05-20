@@ -36,4 +36,6 @@ class carroEletrico(veiculos):
     def get_autonomia(self) -> int:
         """Retorna a autonomia do carro elétrico"""
         return self.__autonomia
+    
+    
         
