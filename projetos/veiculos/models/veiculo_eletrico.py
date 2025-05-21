@@ -1,5 +1,6 @@
 from .veiculos import veiculos
 
+
 class veiculo_eletrico(veiculos):
     def __init__(self, modelo, marca, ano, cor, placa, fipe):
         # Inicializa diretamente os atributos da classe veiculos

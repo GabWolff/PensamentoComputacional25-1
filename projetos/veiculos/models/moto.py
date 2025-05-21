@@ -1,5 +1,7 @@
 class moto:
-    def __init__(self, modelo: str, marca: str, ano: int, cor: str, placa: str, cilindradas: int):
+    def __init__(
+        self, modelo: str, marca: str, ano: int, cor: str, placa: str, cilindradas: int
+    ):
         self.modelo = modelo
         self.marca = marca
         self.ano = ano
@@ -13,10 +15,11 @@ class moto:
         return consumo_total
 
     def __str__(self):
-        return (f"Modelo: {self.modelo}\n"
-                f"Marca: {self.marca}\n"
-                f"Ano: {self.ano}\n"
-                f"Cor: {self.cor}\n"
-                f"Placa: {self.placa}\n"
-                f"Cilindradas: {self.cilindradas} cc")
-
+        return (
+            f"Modelo: {self.modelo}\n"
+            f"Marca: {self.marca}\n"
+            f"Ano: {self.ano}\n"
+            f"Cor: {self.cor}\n"
+            f"Placa: {self.placa}\n"
+            f"Cilindradas: {self.cilindradas} cc"
+        )
