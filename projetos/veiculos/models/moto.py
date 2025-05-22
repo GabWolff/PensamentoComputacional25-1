@@ -1,12 +1,10 @@
-class moto:
+from .veiculos import veiculos
+
+class moto(veiculos):
     def __init__(
         self, modelo: str, marca: str, ano: int, cor: str, placa: str, cilindradas: int
     ):
-        self.modelo = modelo
-        self.marca = marca
-        self.ano = ano
-        self.cor = cor
-        self.placa = placa
+        veiculos.__init__(self, modelo, marca, ano, cor, placa,fipe=0)
         self.cilindradas = cilindradas
 
     def calcular_consumo(self, distancia: float) -> float:

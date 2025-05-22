@@ -1,4 +1,7 @@
-class Caminhao:
+from .veiculos import veiculos
+
+
+class Caminhao(veiculos):
 
     def __init__(
         self,
@@ -10,11 +13,7 @@ class Caminhao:
         capacidade_carga: float,
         eixos: int,
     ):
-        self.modelo = modelo
-        self.marca = marca
-        self.ano = ano
-        self.cor = cor
-        self.placa = placa
+        veiculos.__init__(self, modelo, marca, ano, cor, placa, fipe=0)
         self.capacidade_carga = capacidade_carga  # em toneladas
         self.eixos = eixos
 

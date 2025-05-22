@@ -228,122 +228,82 @@ from models.frota import Frota
 # ------------------------Exercicio 5---------------------##
 
 # Cria uma lista de veículos com placas repetidas entre carros, motos e elétricos
+# veiculos_lista = [
+#     Carro("Gol", "VW", 2020, "Branco", "ABC1234", 4),
+#     moto("CG 160", "Honda", 2021, "Vermelha", "ABC1234", 160),
+#     veiculo_eletrico("Leaf", "Nissan", 2022, "Prata", "XYZ5678", 200000),
+#     Carro("Onix", "Chevrolet", 2021, "Preto", "XYZ5678", 4)
+# ]
+
+# print("\n--- Verificando veículos duplicados pela placa ---")
+# for i in range(len(veiculos_lista)):
+#     for j in range(i + 1, len(veiculos_lista)):
+#         if veiculos_lista[i] == veiculos_lista[j]:
+#             print(f"Duplicado: {veiculos_lista[i].getPlaca()}")
+
+# Cria uma lista de veículos de diferentes tipos
 veiculos_lista = [
-    Carro(
-        modelo="Gol",
-        marca="Volkswagen",
-        ano=2018,
-        cor="Branco",
-        placa="XYZ-9876",
-        nPortas=4,
-    ),
-    moto(
-        modelo="CG 160",
-        marca="Honda",
-        ano=2021,
-        cor="Vermelha",
-        placa="ABC-5678",
-        cilindradas=160,
-    ),
-    Caminhao(
-        modelo="FH 540",
-        marca="Volvo",
-        ano=2022,
-        cor="Branco",
-        placa="CAM1234",
-        capacidade_carga=30.0,
-        eixos=6,
-    ),
-    veiculo_eletrico(
-        modelo="Tesla Model 3",
-        marca="Tesla",
-        ano=2023,
-        cor="Preto",
-        placa="ELT-2023",
-        fipe=350000,
-    ),
-    Carro(
-        modelo="Onix",
-        marca="Chevrolet",
-        ano=2020,
-        cor="Prata",
-        placa="XYZ-9876",
-        nPortas=4,
-    ),  # placa repetida com Gol
-    moto(
-        modelo="Fazer 250",
-        marca="Yamaha",
-        ano=2022,
-        cor="Azul",
-        placa="ABC-5678",
-        cilindradas=250,
-    ),  # placa repetida com CG 160
-    veiculo_eletrico(
-        modelo="Leaf",
-        marca="Nissan",
-        ano=2021,
-        cor="Branco",
-        placa="ELT-2023",
-        fipe=200000,
-    ),  # placa repetida com Tesla
-    Carro(
-        modelo="Fox",
-        marca="Volkswagen",
-        ano=2019,
-        cor="Preto",
-        placa="ZZZ9999",
-        nPortas=4,
-    ),  # placa igual à moto abaixo
-    moto(
-        modelo="Biz",
-        marca="Honda",
-        ano=2020,
-        cor="Preta",
-        placa="ZZZ9999",
-        cilindradas=125,
-    ),  # placa igual ao Fox
-    veiculo_eletrico(
-        modelo="Bolt",
-        marca="Chevrolet",
-        ano=2022,
-        cor="Azul",
-        placa="XYZ-9876",
-        fipe=300000,
-    ),  # placa igual ao Gol e Onix
+    Carro("Gol", "Volkswagen", 2020, "Branco", "ABC1234", 4),
+    moto("CG 160", "Honda", 2021, "Vermelha", "DEF5678", 160),
+    Caminhao("FH 540", "Volvo", 2022, "Branco", "GHI9012", 30.0, 6),
+    veiculo_eletrico("Leaf", "Nissan", 2022, "Prata", "JKL3456", 200000)
 ]
 
-print("\n--- Verificando veículos duplicados pela placa ---")
-duplicados = set()
-for i in range(len(veiculos_lista)):
-    for j in range(i + 1, len(veiculos_lista)):
-        if veiculos_lista[i] == veiculos_lista[j]:
-            chave = tuple(
-                sorted(
-                    [
-                        veiculos_lista[i].getPlaca(),
-                        type(veiculos_lista[i]).__name__,
-                        type(veiculos_lista[j]).__name__,
-                    ]
-                )
+try:
+    distancia = float(input("Digite a distância a ser percorrida em KM: "))
+    if distancia < 0:
+        raise ValueError("A distância não pode ser negativa.")
+    if not veiculos_lista:
+        raise Exception("A lista de veículos está vazia.")
+
+    print("\nConsumo de cada veículo para", distancia, "km:")
+    for veiculo in veiculos_lista:
+        consumo = veiculo.calcular_consumo(distancia)
+        print(f"{type(veiculo).__name__} ({veiculo.getPlaca()}): {consumo:.2f} litros ou kWh")
+except ValueError as ve:
+    print(f"Erro: {ve}")
+except Exception as e:
+    print(f"Erro: {e}")
+
+try:
+    distancia = float(input("Digite a distancia a ser percorrida em KM: "))
+except ValueError:
+    print("Valor inválido para distância! Digite um número.")
+    distancia = None
+
+if distancia is not None:
+    print("Escolha o tipo de veiculo: ")
+    print("1 - Carro")
+    print("2 - Caminhão")
+    print("3 - Moto")
+    print("4 - Adicionar Nova placa")
+
+    opcao = input("Digite o numero correspondente à sua escolha: ")
+
+    veiculo = None
+    try:
+        if opcao == "1":
+            veiculo = Carro("Gol", "VW", 2020, "Branco", "ABC1234", 4)
+        elif opcao == "2":
+            veiculo = Caminhao("FH 540", "Volvo", 2022, "Branco", "XYZ1234", 30.0, 6)
+        elif opcao == "3":
+            veiculo = moto("CG 160", "Honda", 2021, "Vermelha", "ABC5678", 160)
+        elif opcao == "4":
+            print(
+                "Para fazer a criação das placas é necessario seguir esse padrão (LLLNLNN)."
             )
-            if chave not in duplicados:
-                duplicados.add(chave)
-                print(
-                    f"Duplicado: {type(veiculos_lista[i]).__name__} e {type(veiculos_lista[j]).__name__} com placa {veiculos_lista[i].getPlaca()}"
-                )
-                print(f"  1: {veiculos_lista[i]}")
-                print(f"  2: {veiculos_lista[j]}\n")
+            try:
+                novaPlaca = input("Digite a sua nova placa seguindo o padrão: ")
+                print(f"Nova placa cadastrada: {novaPlaca}")
+            except Exception as e:
+                print(f"Erro ao cadastrar: {e}")
 
-if not duplicados:
-    print("Nenhum veículo duplicado encontrado.")
-else:
-    print(f"Total de pares duplicados encontrados: {len(duplicados)}")
+        else:
+            raise ValueError("Tipo de veículo inexistente!")
+    except Exception as e:
+        print(f"Erro ao criar o veículo: {e}")
+        veiculo = None
 
-# Demonstração de polimorfismo:
-print("\n--- Demonstração de polimorfismo na comparação ---")
-carro_dup = Carro("Fox", "Volkswagen", 2019, "Preto", "ZZZ9999", 4)
-moto_dup = moto("Biz", "Honda", 2020, "Preta", "ZZZ9999", 125)
-if carro_dup == moto_dup:
-    print("Carro e Moto são considerados iguais pois possuem a mesma placa.")
-else:
-    print("Carro e Moto são diferentes.")
+    if veiculo:
+        consumo = veiculo.calcular_consumo(distancia)
+        print(f"Consumo para {distancia} km: {consumo:.2f} litros ou kWh")
